@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Guest - Minimal Design</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #f8f5f0 0%, #e8e0d5 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #1a1a1a;
+            position: relative;
+        }
+
+        body::before {
+            content: '🎸';
+            position: fixed;
+            font-size: 500px;
+            opacity: 0.02;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-20deg);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 48px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            margin-bottom: 24px;
+            border: 1px solid #e8e0d5;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #c49a6c 0%, #1a4d7a 100%);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .header h1 {
+            color: #1a1a1a;
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .login-container {
+            text-align: center;
+            padding: 48px 20px;
+        }
+
+        .login-container h2 {
+            margin-bottom: 16px;
+            color: #1a1a1a;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .login-container p {
+            color: #666;
+            margin-bottom: 32px;
+            font-size: 15px;
+        }
+
+        #google-signin-button {
+            display: inline-block;
+            margin: 20px auto;
+        }
+
+        .info-section {
+            margin-bottom: 56px;
+        }
+
+        .info-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-section h2 {
+            color: #1a1a1a;
+            font-size: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .wifi-box {
+            background: linear-gradient(135deg, #f8f5f0 0%, #fff 100%);
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 16px;
+            border: 2px solid #c49a6c;
+            border-left: 6px solid #1a4d7a;
+        }
+
+        .wifi-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .wifi-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .wifi-item:first-child {
+            padding-top: 0;
+        }
+
+        .wifi-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .wifi-value {
+            color: #1a1a1a;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+        }
+
+        .copy-btn {
+            background: #1a4d7a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn:hover {
+            background: #2d5f8d;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-item {
+            padding: 24px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-item:first-child {
+            padding-top: 0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info-item h4 {
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .info-item p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .info-item a {
+            color: #1a1a1a;
+            text-decoration: underline;
+            text-decoration-color: #ddd;
+            transition: text-decoration-color 0.2s ease;
+        }
+
+        .info-item a:hover {
+            text-decoration-color: #1a1a1a;
+        }
+
+        .error-message {
+            background: #fff5f5;
+            color: #c53030;
+            padding: 32px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 24px 0;
+            border: 1px solid #feb2b2;
+        }
+
+        .error-message h2 {
+            margin-bottom: 12px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .error-message p {
+            margin-bottom: 24px;
+            color: #9b2c2c;
+        }
+
+        .error-message button {
+            padding: 12px 24px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .error-message button:hover {
+            background: #333;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e9ecef;
+        }
+
+        .user-email {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: white;
+            color: #1a1a1a;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #f5f5f5;
+            border-color: #ccc;
+        }
+
+        .icon {
+            font-size: 20px;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: #f0f0f0;
+            margin: 48px 0;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 20px 16px;
+            }
+
+            .card {
+                padding: 32px 24px;
+                border-radius: 8px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .info-section h2 {
+                font-size: 18px;
+            }
+
+            .wifi-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .wifi-value {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .user-info {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="module">
+        const CONFIG = {
+            GOOGLE_CLIENT_ID: '313200114392-26h02bnvcatvkcevf1t62cl9c493kb7v.apps.googleusercontent.com',
+            
+            WHITELIST: [
+                'jmorgan.wpi@gmail.com',
+                'janamarija@gmail.com',
+                'jmorgan1007@gmail.com',
+            ],
+
+            WIFI: {
+                networkName: 'Trust Me Im an Engineer',
+                password: 'getitdone',
+                guestNetwork: '',
+                guestPassword: ''
+            },
+
+            HOUSE_INFO: {
+                address: '216 Vaughns Gap Rd, Nashville, TN 37205',
+                emergencyContacts: [
+                    { name: 'Host', phone: '+1 (555) 123-4567' },
+                    { name: 'Emergency Services', phone: '911' },
+                    { name: 'TriStar Centennial Medical Center', phone: '(615) 342-1000' },
+                ],
+                checkInInstructions: 'Welcome to our home! Check-in details will be provided via text message.',
+                checkOutTime: '11:00 AM',
+                parking: 'Free parking in the driveway. Additional street parking available.',
+                neighborhood: 'West Meade - A beautiful, upscale neighborhood near Percy Warner Park',
+            },
+
+            AREA_INFO: {
+                restaurants: [
+                    { name: '360 Bistro', address: '6000 Highway 100', type: 'American Fine Dining', phone: '(615) 353-1984' },
+                    { name: 'Roze Pony', address: 'Belle Meade', type: 'American Contemporary', phone: '(615) 495-1010' },
+                    { name: 'Belle Meade Meat & Three', address: 'Belle Meade Plantation', type: 'Southern Comfort Food', phone: '(615) 356-0501' },
+                    { name: 'Sperry\'s Restaurant', address: '5109 Harding Pike', type: 'Steakhouse', phone: '(615) 353-0809' },
+                ],
+                attractions: [
+                    { name: 'Percy Warner Park', address: 'End of Belle Meade Blvd', description: '3,000+ acres with hiking trails, scenic overlooks, and the famous Allee stone steps' },
+                    { name: 'Cheekwood Estate & Gardens', address: '1200 Forrest Park Dr', description: '55-acre botanical garden and art museum with stunning seasonal displays' },
+                    { name: 'Belle Meade Historic Site & Winery', address: '5025 Harding Pike', description: 'Historic plantation mansion with guided tours and wine tasting' },
+                    { name: 'Downtown Nashville', address: 'Broadway & Lower Broadway', description: '10 miles away - Live music, honky-tonks, Country Music Hall of Fame' },
+                ],
+                transportation: [
+                    { service: 'Uber/Lyft', info: 'Readily available - 15 min to downtown Nashville' },
+                    { service: 'Nashville International Airport (BNA)', info: '20 minutes drive - Major hub with all airlines' },
+                    { service: 'WeGo Public Transit', info: 'Bus service available on Charlotte Pike - $2 per ride' },
+                    { service: 'Parking', info: 'Free parking at the house. Downtown parking can be expensive ($20-30/day)' },
+                ],
+            }
+        };
+
+        let currentUser = null;
+
+        function initializeGoogleSignIn() {
+            if (typeof google === 'undefined') {
+                setTimeout(initializeGoogleSignIn, 100);
+                return;
+            }
+
+            google.accounts.id.initialize({
+                client_id: CONFIG.GOOGLE_CLIENT_ID,
+                callback: handleCredentialResponse,
+            });
+
+            google.accounts.id.renderButton(
+                document.getElementById('google-signin-button'),
+                { 
+                    theme: 'outline', 
+                    size: 'large',
+                    text: 'signin_with',
+                    width: 280
+                }
+            );
+        }
+
+        function handleCredentialResponse(response) {
+            const credential = parseJwt(response.credential);
+            const email = credential.email;
+
+            if (CONFIG.WHITELIST.includes(email)) {
+                currentUser = {
+                    email: email,
+                    name: credential.name,
+                    picture: credential.picture
+                };
+                localStorage.setItem('guestUser', JSON.stringify(currentUser));
+                render();
+            } else {
+                currentUser = null;
+                render('access-denied');
+            }
+        }
+
+        function parseJwt(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('guestUser');
+            google.accounts.id.disableAutoSelect();
+            render();
+        }
+
+        async function copyToClipboard(text, button) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const originalText = button.textContent;
+                button.textContent = '✓ Copied';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            } catch (err) {
+                alert('Failed to copy. Please copy manually: ' + text);
+            }
+        }
+
+        function render(state = 'default') {
+            const app = document.getElementById('app');
+
+            if (state === 'access-denied') {
+                app.innerHTML = `
+                    <div class="container">
+                        <div class="card">
+                            <div class="header">
+                                <h1>Welcome Guest</h1>
+                            </div>
+                            <div class="error-message">
+                                <h2>Access Denied</h2>
+                                <p>Your email is not on the approved guest list. Please contact your host for access.</p>
+                                <button onclick="location.reload()">Try Again</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (!currentUser) {
+                app.innerHTML = `
+                    <div class="container">
+                        <div class="card">
+                            <div class="header">
+                                <h1>Welcome to Nashville 🎸</h1>
+                                <p>Your guide to Music City</p>
+                            </div>
+                            <div class="login-container">
+                                <div style="font-size: 72px; margin-bottom: 16px;">🎵</div>
+                                <h2>Sign in with Google</h2>
+                                <p>Access WiFi, local recommendations, and everything you need for an amazing Nashville stay</p>
+                                <div id="google-signin-button"></div>
+                                <p style="color: #999; margin-top: 24px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">West Meade • Nashville, TN</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                initializeGoogleSignIn();
+                return;
+            }
+
+            app.innerHTML = `
+                <div class="container">
+                    <div class="card">
+                        <div class="header">
+                            <h1>Welcome, ${currentUser.name.split(' ')[0]}</h1>
+                            <p>Everything you need for your stay</p>
+                        </div>
+
+                        <div class="user-info">
+                            <span class="user-email">${currentUser.email}</span>
+                            <button class="logout-btn" onclick="logout()">Sign Out</button>
+                        </div>
+
+                        <div class="info-section">
+                            <h2><span class="icon">📶</span> WiFi Information</h2>
+                            <div class="wifi-box">
+                                <div class="wifi-item">
+                                    <span class="wifi-label">Network</span>
+                                    <span class="wifi-value">
+                                        ${CONFIG.WIFI.networkName}
+                                        <button class="copy-btn" onclick="copyToClipboard('${CONFIG.WIFI.networkName}', this)">Copy</button>
+                                    </span>
+                                </div>
+                                <div class="wifi-item">
+                                    <span class="wifi-label">Password</span>
+                                    <span class="wifi-value">
+                                        ${CONFIG.WIFI.password}
+                                        <button class="copy-btn" onclick="copyToClipboard('${CONFIG.WIFI.password}', this)">Copy</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="info-section">
+                            <h2><span class="icon">🏡</span> House Information</h2>
+                            <ul class="info-list">
+                                <li class="info-item">
+                                    <h4>Address</h4>
+                                    <p>${CONFIG.HOUSE_INFO.address}</p>
+                                </li>
+                                <li class="info-item">
+                                    <h4>Check-in Instructions</h4>
+                                    <p>${CONFIG.HOUSE_INFO.checkInInstructions}</p>
+                                </li>
+                                <li class="info-item">
+                                    <h4>Check-out Time</h4>
+                                    <p>${CONFIG.HOUSE_INFO.checkOutTime}</p>
+                                </li>
+                                <li class="info-item">
+                                    <h4>Parking</h4>
+                                    <p>${CONFIG.HOUSE_INFO.parking}</p>
+                                </li>
+                                <li class="info-item">
+                                    <h4>Emergency Contacts</h4>
+                                    ${CONFIG.HOUSE_INFO.emergencyContacts.map(contact => `
+                                        <p style="margin-top: 8px;"><strong>${contact.name}:</strong> <a href="tel:${contact.phone}">${contact.phone}</a></p>
+                                    `).join('')}
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="info-section">
+                            <h2><span class="icon">🍽️</span> Recommended Restaurants</h2>
+                            <ul class="info-list">
+                                ${CONFIG.AREA_INFO.restaurants.map(restaurant => `
+                                    <li class="info-item">
+                                        <h4>${restaurant.name}</h4>
+                                        <p><strong>${restaurant.type}</strong><br>
+                                        ${restaurant.address}<br>
+                                        <a href="tel:${restaurant.phone}">${restaurant.phone}</a></p>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="info-section">
+                            <h2><span class="icon">🎯</span> Local Attractions</h2>
+                            <ul class="info-list">
+                                ${CONFIG.AREA_INFO.attractions.map(attraction => `
+                                    <li class="info-item">
+                                        <h4>${attraction.name}</h4>
+                                        <p>${attraction.description}<br>
+                                        <em>${attraction.address}</em></p>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="info-section">
+                            <h2><span class="icon">🚗</span> Transportation</h2>
+                            <ul class="info-list">
+                                ${CONFIG.AREA_INFO.transportation.map(transport => `
+                                    <li class="info-item">
+                                        <h4>${transport.service}</h4>
+                                        <p>${transport.info}</p>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.logout = logout;
+        window.copyToClipboard = copyToClipboard;
+
+        const savedUser = localStorage.getItem('guestUser');
+        if (savedUser) {
+            try {
+                currentUser = JSON.parse(savedUser);
+            } catch (e) {
+                localStorage.removeItem('guestUser');
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>
